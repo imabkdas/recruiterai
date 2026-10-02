@@ -1,0 +1,2542 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "JobPilot API",
+    "description": "Local JSON API for JobPilot search and application management.",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Get Health",
+        "description": "Return health status of the API server.",
+        "operationId": "get_health_api_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/progress": {
+      "get": {
+        "tags": [
+          "progress"
+        ],
+        "summary": "Get Progress",
+        "description": "Return daily and weekly application progress metrics.",
+        "operationId": "get_progress_api_progress_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProgressSummary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/queue": {
+      "get": {
+        "tags": [
+          "jobs"
+        ],
+        "summary": "Get Queue",
+        "description": "Return ranked daily queue items.",
+        "operationId": "get_queue_api_queue_get",
+        "parameters": [
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Size"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QueueItem"
+                  },
+                  "title": "Response Get Queue Api Queue Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/needs-jd": {
+      "get": {
+        "tags": [
+          "jobs"
+        ],
+        "summary": "Get Needs Jd",
+        "description": "Return jobs awaiting full JD paste.",
+        "operationId": "get_needs_jd_api_needs_jd_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/NeedsJdItem"
+                  },
+                  "type": "array",
+                  "title": "Response Get Needs Jd Api Needs Jd Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs/{job_id}": {
+      "get": {
+        "tags": [
+          "jobs"
+        ],
+        "summary": "Get Job Detail",
+        "description": "Return complete job details including analysis, score, and drafts.",
+        "operationId": "get_job_detail_api_jobs__job_id__get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs/{job_id}/prepare": {
+      "post": {
+        "tags": [
+          "jobs"
+        ],
+        "summary": "Prepare Job",
+        "description": "Prepare application draft materials for a job.",
+        "operationId": "prepare_job_api_jobs__job_id__prepare_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrepareResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs/{job_id}/mark": {
+      "post": {
+        "tags": [
+          "jobs"
+        ],
+        "summary": "Mark Job",
+        "description": "Transition a job's status and record application metadata.",
+        "operationId": "mark_job_api_jobs__job_id__mark_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkJobRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobStatusUpdate"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs/{job_id}/skip": {
+      "post": {
+        "tags": [
+          "jobs"
+        ],
+        "summary": "Skip Job",
+        "description": "Mark a job as skipped.",
+        "operationId": "skip_job_api_jobs__job_id__skip_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobStatusUpdate"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs/{job_id}/jd": {
+      "post": {
+        "tags": [
+          "jobs"
+        ],
+        "summary": "Add Jd",
+        "description": "Attach full job description text to a job.",
+        "operationId": "add_jd_api_jobs__job_id__jd_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddJDRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddJDResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/applications": {
+      "get": {
+        "tags": [
+          "jobs"
+        ],
+        "summary": "List Applications",
+        "description": "List applications optionally filtered by job status.",
+        "operationId": "list_applications_api_applications_get",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApplicationItem"
+                  },
+                  "title": "Response List Applications Api Applications Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/follow-ups": {
+      "get": {
+        "tags": [
+          "jobs"
+        ],
+        "summary": "Get Follow Ups",
+        "description": "List applied jobs where follow-up is due.",
+        "operationId": "get_follow_ups_api_follow_ups_get",
+        "parameters": [
+          {
+            "name": "days",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Days"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FollowUpItem"
+                  },
+                  "title": "Response Get Follow Ups Api Follow Ups Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/answers/ask": {
+      "post": {
+        "tags": [
+          "answers"
+        ],
+        "summary": "Ask Question",
+        "description": "Generate or retrieve an answer to an application question.",
+        "operationId": "ask_question_api_answers_ask_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AskQuestionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnswerResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/answers": {
+      "get": {
+        "tags": [
+          "answers"
+        ],
+        "summary": "List Answers",
+        "description": "List all questions and stored answers in the answer bank.",
+        "operationId": "list_answers_api_answers_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AnswerBankItem"
+                  },
+                  "type": "array",
+                  "title": "Response List Answers Api Answers Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/answers/{answer_id}": {
+      "put": {
+        "tags": [
+          "answers"
+        ],
+        "summary": "Update Answer",
+        "description": "Supply or update an answer for an answer bank item.",
+        "operationId": "update_answer_api_answers__answer_id__put",
+        "parameters": [
+          {
+            "name": "answer_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Answer Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetAnswerRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionSuccessResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/answers/{answer_id}/approve": {
+      "post": {
+        "tags": [
+          "answers"
+        ],
+        "summary": "Approve Answer",
+        "description": "Mark an answer bank entry as approved.",
+        "operationId": "approve_answer_api_answers__answer_id__approve_post",
+        "parameters": [
+          {
+            "name": "answer_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Answer Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionSuccessResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/stats": {
+      "get": {
+        "tags": [
+          "analytics"
+        ],
+        "summary": "Get Stats",
+        "description": "Return application funnel and conversion statistics.",
+        "operationId": "get_stats_api_stats_get",
+        "parameters": [
+          {
+            "name": "weeks",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 4,
+              "title": "Weeks"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FullStatsReport"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/profile-report": {
+      "get": {
+        "tags": [
+          "analytics"
+        ],
+        "summary": "Get Profile Report",
+        "description": "Return validation report and gap analysis for profile.yaml and resume.",
+        "operationId": "get_profile_report_api_profile_report_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileReport"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/run": {
+      "post": {
+        "tags": [
+          "run"
+        ],
+        "summary": "Trigger Run",
+        "description": "Trigger the daily pipeline in a background thread.",
+        "operationId": "trigger_run_api_run_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/run/status": {
+      "get": {
+        "tags": [
+          "run"
+        ],
+        "summary": "Get Run Status",
+        "description": "Return status of the active or most recent pipeline run.",
+        "operationId": "get_run_status_api_run_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActionSuccessResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success",
+            "default": true
+          }
+        },
+        "type": "object",
+        "title": "ActionSuccessResponse"
+      },
+      "AddJDRequest": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 200000,
+            "title": "Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "title": "AddJDRequest"
+      },
+      "AddJDResult": {
+        "properties": {
+          "job_id": {
+            "type": "integer",
+            "title": "Job Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "char_count": {
+            "type": "integer",
+            "title": "Char Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "status",
+          "char_count"
+        ],
+        "title": "AddJDResult"
+      },
+      "AnswerBankItem": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "question_norm": {
+            "type": "string",
+            "title": "Question Norm"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "answer": {
+            "type": "string",
+            "title": "Answer"
+          },
+          "approved": {
+            "type": "boolean",
+            "title": "Approved"
+          },
+          "source_job_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Job Id"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "question_norm",
+          "category",
+          "answer",
+          "approved"
+        ],
+        "title": "AnswerBankItem"
+      },
+      "AnswerResult": {
+        "properties": {
+          "question": {
+            "type": "string",
+            "title": "Question"
+          },
+          "question_norm": {
+            "type": "string",
+            "title": "Question Norm"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "answer": {
+            "type": "string",
+            "title": "Answer"
+          },
+          "is_draft": {
+            "type": "boolean",
+            "title": "Is Draft"
+          },
+          "answer_bank_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Answer Bank Id"
+          },
+          "from_bank": {
+            "type": "boolean",
+            "title": "From Bank",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "question",
+          "question_norm",
+          "category",
+          "answer",
+          "is_draft"
+        ],
+        "title": "AnswerResult",
+        "description": "Outcome of answering one application question."
+      },
+      "ApplicationDraft": {
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "job_id": {
+            "type": "integer",
+            "title": "Job Id"
+          },
+          "tailored_summary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tailored Summary"
+          },
+          "short_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Short Note"
+          },
+          "outreach_draft": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Outreach Draft"
+          },
+          "bullet_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Bullet Ids"
+          },
+          "prepared_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prepared At"
+          },
+          "applied_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applied At"
+          },
+          "channel": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Channel"
+          },
+          "referral_contact": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Referral Contact"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id"
+        ],
+        "title": "ApplicationDraft"
+      },
+      "ApplicationItem": {
+        "properties": {
+          "job_id": {
+            "type": "integer",
+            "title": "Job Id"
+          },
+          "company": {
+            "type": "string",
+            "title": "Company"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "applied_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applied At"
+          },
+          "channel": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Channel"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "referral_contact": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Referral Contact"
+          },
+          "prepared_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prepared At"
+          },
+          "tailored_summary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tailored Summary"
+          },
+          "short_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Short Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "company",
+          "title",
+          "status"
+        ],
+        "title": "ApplicationItem"
+      },
+      "ApplicationStats": {
+        "properties": {
+          "weeks": {
+            "items": {
+              "$ref": "#/components/schemas/WeeklyAppStats"
+            },
+            "type": "array",
+            "title": "Weeks"
+          },
+          "total_applied": {
+            "type": "integer",
+            "title": "Total Applied"
+          },
+          "weekly_target": {
+            "type": "integer",
+            "title": "Weekly Target"
+          },
+          "avg_per_week": {
+            "type": "number",
+            "title": "Avg Per Week"
+          }
+        },
+        "type": "object",
+        "required": [
+          "weeks",
+          "total_applied",
+          "weekly_target",
+          "avg_per_week"
+        ],
+        "title": "ApplicationStats",
+        "description": "Weekly application performance over the evaluation window."
+      },
+      "AskQuestionRequest": {
+        "properties": {
+          "question": {
+            "type": "string",
+            "title": "Question"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "question"
+        ],
+        "title": "AskQuestionRequest"
+      },
+      "ConversionStats": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "applied": {
+            "type": "integer",
+            "title": "Applied"
+          },
+          "responses": {
+            "type": "integer",
+            "title": "Responses"
+          },
+          "interviews": {
+            "type": "integer",
+            "title": "Interviews"
+          },
+          "offers": {
+            "type": "integer",
+            "title": "Offers"
+          },
+          "response_rate": {
+            "type": "number",
+            "title": "Response Rate"
+          },
+          "rejected": {
+            "type": "integer",
+            "title": "Rejected",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "applied",
+          "responses",
+          "interviews",
+          "offers",
+          "response_rate"
+        ],
+        "title": "ConversionStats",
+        "description": "Response and interview metrics for a category (source or tier)."
+      },
+      "FollowUpItem": {
+        "properties": {
+          "job_id": {
+            "type": "integer",
+            "title": "Job Id"
+          },
+          "company": {
+            "type": "string",
+            "title": "Company"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "applied_at": {
+            "type": "string",
+            "title": "Applied At"
+          },
+          "days_since_applied": {
+            "type": "integer",
+            "title": "Days Since Applied"
+          },
+          "channel": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Channel"
+          },
+          "referral_contact": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Referral Contact"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "company",
+          "title",
+          "status",
+          "applied_at",
+          "days_since_applied"
+        ],
+        "title": "FollowUpItem"
+      },
+      "FullStatsReport": {
+        "properties": {
+          "funnel": {
+            "$ref": "#/components/schemas/FunnelStats"
+          },
+          "applications": {
+            "$ref": "#/components/schemas/ApplicationStats"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/ConversionStats"
+            },
+            "type": "array",
+            "title": "Sources"
+          },
+          "tiers": {
+            "items": {
+              "$ref": "#/components/schemas/ConversionStats"
+            },
+            "type": "array",
+            "title": "Tiers"
+          }
+        },
+        "type": "object",
+        "required": [
+          "funnel",
+          "applications",
+          "sources",
+          "tiers"
+        ],
+        "title": "FullStatsReport",
+        "description": "Combined report returned by get_stats_report."
+      },
+      "FunnelStats": {
+        "properties": {
+          "total_discovered": {
+            "type": "integer",
+            "title": "Total Discovered"
+          },
+          "filtered": {
+            "type": "integer",
+            "title": "Filtered"
+          },
+          "needs_jd": {
+            "type": "integer",
+            "title": "Needs Jd"
+          },
+          "analyzed": {
+            "type": "integer",
+            "title": "Analyzed"
+          },
+          "scored": {
+            "type": "integer",
+            "title": "Scored"
+          },
+          "queued": {
+            "type": "integer",
+            "title": "Queued"
+          },
+          "prepared": {
+            "type": "integer",
+            "title": "Prepared"
+          },
+          "applied": {
+            "type": "integer",
+            "title": "Applied"
+          },
+          "replied": {
+            "type": "integer",
+            "title": "Replied"
+          },
+          "interview": {
+            "type": "integer",
+            "title": "Interview"
+          },
+          "offer": {
+            "type": "integer",
+            "title": "Offer"
+          },
+          "rejected": {
+            "type": "integer",
+            "title": "Rejected"
+          },
+          "skipped": {
+            "type": "integer",
+            "title": "Skipped"
+          },
+          "expired": {
+            "type": "integer",
+            "title": "Expired"
+          },
+          "status_counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Status Counts"
+          },
+          "total_applied_all_time": {
+            "type": "integer",
+            "title": "Total Applied All Time",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "required": [
+          "total_discovered",
+          "filtered",
+          "needs_jd",
+          "analyzed",
+          "scored",
+          "queued",
+          "prepared",
+          "applied",
+          "replied",
+          "interview",
+          "offer",
+          "rejected",
+          "skipped",
+          "expired",
+          "status_counts"
+        ],
+        "title": "FunnelStats",
+        "description": "Funnel counts across the full job lifecycle."
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HealthResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "ok"
+          }
+        },
+        "type": "object",
+        "title": "HealthResponse"
+      },
+      "JobAnalysis": {
+        "properties": {
+          "normalized_title": {
+            "type": "string",
+            "title": "Normalized Title"
+          },
+          "seniority": {
+            "type": "string",
+            "title": "Seniority",
+            "default": "unknown"
+          },
+          "experience_min_years": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Experience Min Years"
+          },
+          "experience_max_years": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Experience Max Years"
+          },
+          "required_skills": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Required Skills"
+          },
+          "preferred_skills": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Preferred Skills"
+          },
+          "responsibilities_summary": {
+            "type": "string",
+            "title": "Responsibilities Summary",
+            "default": ""
+          },
+          "location_type": {
+            "type": "string",
+            "title": "Location Type",
+            "default": "unknown"
+          },
+          "locations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Locations"
+          },
+          "remote_eligibility": {
+            "$ref": "#/components/schemas/RemoteEligibility"
+          },
+          "visa_or_work_auth_required": {
+            "type": "boolean",
+            "title": "Visa Or Work Auth Required",
+            "default": false
+          },
+          "salary": {
+            "$ref": "#/components/schemas/Salary"
+          },
+          "red_flags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Red Flags"
+          }
+        },
+        "type": "object",
+        "required": [
+          "normalized_title"
+        ],
+        "title": "JobAnalysis",
+        "description": "Structured data extracted from a job description by the LLM."
+      },
+      "JobDetail": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "fingerprint": {
+            "type": "string",
+            "title": "Fingerprint"
+          },
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "company": {
+            "type": "string",
+            "title": "Company"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "remote_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Remote Type"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "apply_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Apply Url"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "snippet": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Snippet"
+          },
+          "posted_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Posted At"
+          },
+          "discovered_at": {
+            "type": "string",
+            "title": "Discovered At"
+          },
+          "last_seen_at": {
+            "type": "string",
+            "title": "Last Seen At"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "status_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status Reason"
+          },
+          "analysis": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/JobAnalysis"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "score": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ScoreDetail"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "application": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ApplicationDraft"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "fingerprint",
+          "source",
+          "company",
+          "title",
+          "url",
+          "discovered_at",
+          "last_seen_at",
+          "status"
+        ],
+        "title": "JobDetail"
+      },
+      "JobStatusUpdate": {
+        "properties": {
+          "job_id": {
+            "type": "integer",
+            "title": "Job Id"
+          },
+          "previous_status": {
+            "type": "string",
+            "title": "Previous Status"
+          },
+          "new_status": {
+            "type": "string",
+            "title": "New Status"
+          },
+          "channel": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Channel"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "referral_contact": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Referral Contact"
+          },
+          "timestamp": {
+            "type": "string",
+            "title": "Timestamp"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "previous_status",
+          "new_status",
+          "timestamp"
+        ],
+        "title": "JobStatusUpdate"
+      },
+      "MarkJobRequest": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "channel": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Channel"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "referral_contact": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Referral Contact"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "MarkJobRequest"
+      },
+      "NeedsJdItem": {
+        "properties": {
+          "job_id": {
+            "type": "integer",
+            "title": "Job Id"
+          },
+          "company": {
+            "type": "string",
+            "title": "Company"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "location": {
+            "type": "string",
+            "title": "Location"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "company",
+          "title",
+          "location",
+          "url"
+        ],
+        "title": "NeedsJdItem",
+        "description": "Job requiring full description input."
+      },
+      "PrepareResult": {
+        "properties": {
+          "job_id": {
+            "type": "integer",
+            "title": "Job Id"
+          },
+          "tier": {
+            "type": "string",
+            "title": "Tier"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note"
+          },
+          "bullet_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Bullet Ids"
+          },
+          "outreach_draft": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Outreach Draft"
+          },
+          "used_fallback": {
+            "type": "boolean",
+            "title": "Used Fallback",
+            "default": false
+          },
+          "validation_errors": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Validation Errors"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "tier",
+          "summary",
+          "note"
+        ],
+        "title": "PrepareResult",
+        "description": "Outcome of preparing one job."
+      },
+      "ProfileReport": {
+        "properties": {
+          "validation_errors": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Validation Errors"
+          },
+          "validation_warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Validation Warnings"
+          },
+          "unset_settings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Unset Settings"
+          },
+          "unmatched_skills": {
+            "items": {
+              "prefixItems": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ],
+              "type": "array",
+              "maxItems": 2,
+              "minItems": 2
+            },
+            "type": "array",
+            "title": "Unmatched Skills"
+          }
+        },
+        "type": "object",
+        "title": "ProfileReport"
+      },
+      "ProgressSummary": {
+        "properties": {
+          "applied_today": {
+            "type": "integer",
+            "title": "Applied Today"
+          },
+          "daily_size": {
+            "type": "integer",
+            "title": "Daily Size"
+          },
+          "applied_this_week": {
+            "type": "integer",
+            "title": "Applied This Week"
+          },
+          "weekly_target": {
+            "type": "integer",
+            "title": "Weekly Target"
+          },
+          "follow_ups_due_count": {
+            "type": "integer",
+            "title": "Follow Ups Due Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "applied_today",
+          "daily_size",
+          "applied_this_week",
+          "weekly_target",
+          "follow_ups_due_count"
+        ],
+        "title": "ProgressSummary"
+      },
+      "QueueItem": {
+        "properties": {
+          "rank": {
+            "type": "integer",
+            "title": "Rank"
+          },
+          "job_id": {
+            "type": "integer",
+            "title": "Job Id"
+          },
+          "company": {
+            "type": "string",
+            "title": "Company"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "location": {
+            "type": "string",
+            "title": "Location"
+          },
+          "tier": {
+            "type": "string",
+            "title": "Tier"
+          },
+          "score": {
+            "type": "number",
+            "title": "Score"
+          },
+          "matched_skills": {
+            "type": "string",
+            "title": "Matched Skills"
+          },
+          "gaps": {
+            "type": "string",
+            "title": "Gaps"
+          },
+          "flags": {
+            "type": "string",
+            "title": "Flags"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "prepared": {
+            "type": "string",
+            "title": "Prepared"
+          }
+        },
+        "type": "object",
+        "required": [
+          "rank",
+          "job_id",
+          "company",
+          "title",
+          "location",
+          "tier",
+          "score",
+          "matched_skills",
+          "gaps",
+          "flags",
+          "url",
+          "prepared"
+        ],
+        "title": "QueueItem",
+        "description": "Single item in the daily ranked queue."
+      },
+      "RemoteEligibility": {
+        "properties": {
+          "open_to_india": {
+            "type": "string",
+            "title": "Open To India",
+            "default": "unclear"
+          },
+          "restriction_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Restriction Text"
+          }
+        },
+        "type": "object",
+        "title": "RemoteEligibility"
+      },
+      "RunStageItem": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "pending"
+          },
+          "counts": {
+            "title": "Counts"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "RunStageItem"
+      },
+      "RunStatusResponse": {
+        "properties": {
+          "state": {
+            "type": "string",
+            "title": "State",
+            "default": "idle"
+          },
+          "stages": {
+            "items": {
+              "$ref": "#/components/schemas/RunStageItem"
+            },
+            "type": "array",
+            "title": "Stages"
+          },
+          "started_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Started At"
+          },
+          "finished_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finished At"
+          },
+          "summary": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "title": "RunStatusResponse"
+      },
+      "RunSummary": {
+        "properties": {
+          "stages": {
+            "items": {
+              "$ref": "#/components/schemas/StageSummary"
+            },
+            "type": "array",
+            "title": "Stages"
+          },
+          "new_jobs": {
+            "type": "integer",
+            "title": "New Jobs",
+            "default": 0
+          },
+          "queued_count": {
+            "type": "integer",
+            "title": "Queued Count",
+            "default": 0
+          },
+          "tier_a_count": {
+            "type": "integer",
+            "title": "Tier A Count",
+            "default": 0
+          },
+          "needs_jd_count": {
+            "type": "integer",
+            "title": "Needs Jd Count",
+            "default": 0
+          },
+          "prepared_count": {
+            "type": "integer",
+            "title": "Prepared Count",
+            "default": 0
+          },
+          "follow_ups_due_count": {
+            "type": "integer",
+            "title": "Follow Ups Due Count",
+            "default": 0
+          },
+          "has_failures": {
+            "type": "boolean",
+            "title": "Has Failures",
+            "default": false
+          }
+        },
+        "type": "object",
+        "title": "RunSummary"
+      },
+      "Salary": {
+        "properties": {
+          "min": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Min"
+          },
+          "max": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max"
+          },
+          "currency": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Currency"
+          },
+          "period": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Period"
+          }
+        },
+        "type": "object",
+        "title": "Salary"
+      },
+      "ScoreDetail": {
+        "properties": {
+          "total": {
+            "type": "number",
+            "title": "Total"
+          },
+          "tier": {
+            "type": "string",
+            "title": "Tier"
+          },
+          "skills_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Skills Score"
+          },
+          "experience_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Experience Score"
+          },
+          "seniority_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seniority Score"
+          },
+          "location_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location Score"
+          },
+          "extras_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Extras Score"
+          },
+          "covered_skills": {
+            "items": {
+              "$ref": "#/components/schemas/SkillEvidenceItem"
+            },
+            "type": "array",
+            "title": "Covered Skills"
+          },
+          "partial_skills": {
+            "items": {
+              "$ref": "#/components/schemas/SkillEvidenceItem"
+            },
+            "type": "array",
+            "title": "Partial Skills"
+          },
+          "learning_only_skills": {
+            "items": {
+              "$ref": "#/components/schemas/SkillEvidenceItem"
+            },
+            "type": "array",
+            "title": "Learning Only Skills"
+          },
+          "missing_skills": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing Skills"
+          },
+          "flags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Flags"
+          },
+          "scored_at": {
+            "type": "string",
+            "title": "Scored At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "total",
+          "tier",
+          "scored_at"
+        ],
+        "title": "ScoreDetail"
+      },
+      "SetAnswerRequest": {
+        "properties": {
+          "answer_text": {
+            "type": "string",
+            "title": "Answer Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "answer_text"
+        ],
+        "title": "SetAnswerRequest"
+      },
+      "SkillEvidenceItem": {
+        "properties": {
+          "skill": {
+            "type": "string",
+            "title": "Skill"
+          },
+          "level": {
+            "type": "string",
+            "title": "Level"
+          },
+          "evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Evidence Ids"
+          }
+        },
+        "type": "object",
+        "required": [
+          "skill",
+          "level"
+        ],
+        "title": "SkillEvidenceItem"
+      },
+      "StageSummary": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "summary": {
+            "title": "Summary"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "status"
+        ],
+        "title": "StageSummary"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "WeeklyAppStats": {
+        "properties": {
+          "iso_week": {
+            "type": "string",
+            "title": "Iso Week"
+          },
+          "week_start": {
+            "type": "string",
+            "title": "Week Start"
+          },
+          "week_end": {
+            "type": "string",
+            "title": "Week End"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          },
+          "target": {
+            "type": "integer",
+            "title": "Target"
+          },
+          "pct_of_target": {
+            "type": "number",
+            "title": "Pct Of Target"
+          }
+        },
+        "type": "object",
+        "required": [
+          "iso_week",
+          "week_start",
+          "week_end",
+          "count",
+          "target",
+          "pct_of_target"
+        ],
+        "title": "WeeklyAppStats",
+        "description": "Application volume for a single calendar week."
+      }
+    }
+  }
+}

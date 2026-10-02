@@ -1,0 +1,38 @@
+# Secrets
+.env
+credentials.json
+credentials*.json
+
+# Data directory (private candidate data, DB, outputs) — never commit any of it
+data/
+
+# OAuth token files
+token.json
+token.pickle
+*.token
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# uv
+uv.lock

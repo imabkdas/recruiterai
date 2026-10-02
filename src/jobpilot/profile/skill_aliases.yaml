@@ -1,0 +1,297 @@
+# Skill alias map for JobPilot.
+# Maps variant names (lowercase) to canonical names.
+# Applied to both profile skills and extracted JD skills.
+# Keep this file editable and extend as unmatched skills appear.
+
+aliases:
+  # ---- Core backend ----
+  "spring boot": "Spring Boot"
+  "springboot": "Spring Boot"
+  "spring-boot": "Spring Boot"
+  "spring framework": "Spring Boot"
+  "spring": "Spring Boot"
+  "spring mvc": "Spring Boot"
+
+  "java": "Java"
+  "core java": "Java"
+  "java se": "Java"
+  "java ee": "Java"
+  "j2ee": "Java"
+  "java 8": "Java"
+  "java 11": "Java"
+  "java 17": "Java 17"
+  "java 21": "Java 21"
+
+  "microservice": "Microservices"
+  "micro-services": "Microservices"
+  "micro services": "Microservices"
+  "microservices": "Microservices"
+  "microservices architecture": "Microservices"
+
+  "rest": "REST APIs"
+  "restful": "REST APIs"
+  "rest api": "REST APIs"
+  "rest apis": "REST APIs"
+  "restful apis": "REST APIs"
+  "restful api": "REST APIs"
+  "restful services": "REST APIs"
+  "restful web services": "REST APIs"
+
+  "kafka": "Kafka"
+  "apache kafka": "Kafka"
+  "kafka streams": "Kafka"
+
+  "event driven": "Event-driven architecture"
+  "event-driven": "Event-driven architecture"
+  "event driven architecture": "Event-driven architecture"
+  "event-driven architecture": "Event-driven architecture"
+  "eda": "Event-driven architecture"
+
+  "spring security": "Spring Security"
+  "springsecurity": "Spring Security"
+
+  "batch processing": "Batch Processing"
+  "spring batch": "Batch Processing"
+
+  # ---- Frontend ----
+  "react": "React"
+  "reactjs": "React"
+  "react.js": "React"
+  "react js": "React"
+
+  "bootstrap": "Bootstrap"
+  "twitter bootstrap": "Bootstrap"
+
+  "ts": "TypeScript"
+  "typescript": "TypeScript"
+  "type script": "TypeScript"
+
+  "js": "JavaScript"
+  "javascript": "JavaScript"
+  "es6": "JavaScript"
+  "ecmascript": "JavaScript"
+  "es2015": "JavaScript"
+
+  "socket.io": "Socket.IO"
+  "socketio": "Socket.IO"
+  "socket io": "Socket.IO"
+  "websocket": "Socket.IO"
+  "websockets": "Socket.IO"
+
+  "react native": "React Native"
+  "reactnative": "React Native"
+
+  # ---- Databases ----
+  "mysql": "MySQL"
+  "my sql": "MySQL"
+  "maria db": "MySQL"
+  "mariadb": "MySQL"
+
+  "postgres": "PostgreSQL"
+  "postgresql": "PostgreSQL"
+  "psql": "PostgreSQL"
+  "pg": "PostgreSQL"
+
+  "pgvector": "pgvector"
+  "pg_vector": "pgvector"
+
+  # ---- Cloud / infrastructure ----
+  "docker": "Docker"
+  "containerization": "Docker"
+  "containers": "Docker"
+  "docker compose": "Docker"
+
+  "k8s": "Kubernetes"
+  "kubernetes": "Kubernetes"
+  "kube": "Kubernetes"
+
+  "pcf": "Cloud Foundry"
+  "pivotal cloud foundry": "Cloud Foundry"
+  "cloud foundry": "Cloud Foundry"
+  "cf": "Cloud Foundry"
+
+  "blue-green deployment": "Blue-green deployment"
+  "blue green deployment": "Blue-green deployment"
+  "blue/green deployment": "Blue-green deployment"
+  "blue green": "Blue-green deployment"
+
+  "azure": "Azure"
+  "microsoft azure": "Azure"
+
+  "aws": "AWS"
+  "amazon web services": "AWS"
+
+  "amazon ecs": "AWS ECS"
+  "aws ecs": "AWS ECS"
+  "ecs": "AWS ECS"
+
+  "aws fargate": "AWS Fargate"
+  "fargate": "AWS Fargate"
+
+  "aws ecr": "AWS ECR"
+  "ecr": "AWS ECR"
+
+  "aws s3": "AWS S3"
+  "s3": "AWS S3"
+
+  "aws lambda": "AWS Lambda"
+  "lambda": "AWS Lambda"
+
+  # ---- CI/CD and tooling ----
+  "jenkins": "Jenkins"
+  "jenkins ci": "Jenkins"
+
+  "ci/cd": "CI/CD"
+  "cicd": "CI/CD"
+  "ci cd": "CI/CD"
+  "continuous integration": "CI/CD"
+  "continuous delivery": "CI/CD"
+  "continuous deployment": "CI/CD"
+
+  "git": "Git"
+  "github": "GitHub"
+  "gh": "GitHub"
+  "gitlab": "GitLab"
+  "bitbucket": "Bitbucket"
+
+  "maven": "Maven"
+  "mvn": "Maven"
+  "gradle": "Gradle"
+
+  # ---- Security / identity ----
+  "oauth": "OAuth 2.0"
+  "oauth2": "OAuth 2.0"
+  "oauth 2": "OAuth 2.0"
+  "oauth 2.0": "OAuth 2.0"
+  "oauth2.0": "OAuth 2.0"
+
+  "json web token": "JWT"
+  "jwt": "JWT"
+  "json web tokens": "JWT"
+
+  "azure active directory": "Azure AD"
+  "azure ad": "Azure AD"
+  "entra id": "Azure AD"
+  "microsoft entra": "Azure AD"
+  "microsoft entra id": "Azure AD"
+
+  "sso": "SSO"
+  "single sign-on": "SSO"
+  "single sign on": "SSO"
+
+  "ping federate": "Ping Federate"
+  "pingfederate": "Ping Federate"
+  "ping identity": "Ping Federate"
+
+  # ---- Monitoring ----
+  "new relic": "New Relic"
+  "newrelic": "New Relic"
+
+  "observability": "Observability"
+  "monitoring": "Observability"
+
+  "datadog": "Datadog"
+  "splunk": "Splunk"
+  "grafana": "Grafana"
+  "prometheus": "Prometheus"
+  "elk": "ELK Stack"
+  "elastic stack": "ELK Stack"
+
+  # ---- Testing ----
+  "junit": "JUnit"
+  "junit5": "JUnit"
+  "junit 5": "JUnit"
+
+  "mockito": "Mockito"
+
+  "cucumber": "Cucumber"
+  "bdd": "Cucumber"
+
+  "selenium": "Selenium"
+  "testng": "TestNG"
+
+  # ---- Process ----
+  "agile": "Agile"
+  "scrum": "Agile"
+  "kanban": "Agile"
+
+  "jira": "Jira"
+  "atlassian jira": "Jira"
+
+  "confluence": "Confluence"
+
+  # ---- AI / GenAI ----
+  "openai": "OpenAI APIs"
+  "openai api": "OpenAI APIs"
+  "openai apis": "OpenAI APIs"
+  "gpt": "OpenAI APIs"
+  "chatgpt api": "OpenAI APIs"
+
+  "embeddings": "Embeddings"
+  "vector embeddings": "Embeddings"
+  "text embeddings": "Embeddings"
+
+  "mcp": "MCP"
+  "model context protocol": "MCP"
+
+  "n8n": "n8n"
+  "fastapi": "FastAPI"
+  "fast api": "FastAPI"
+
+  "langchain": "LangChain"
+  "llm": "LLM"
+  "large language model": "LLM"
+  "large language models": "LLM"
+  "rag": "RAG"
+  "retrieval augmented generation": "RAG"
+
+  # ---- Mobile ----
+  "kotlin": "Kotlin"
+  "jetpack compose": "Jetpack Compose"
+  "android": "Android"
+  "android sdk": "Android"
+
+  # ---- General backend extras ----
+  "redis": "Redis"
+  "rabbitmq": "RabbitMQ"
+  "rabbit mq": "RabbitMQ"
+  "mongodb": "MongoDB"
+  "mongo": "MongoDB"
+  "elasticsearch": "Elasticsearch"
+  "elastic search": "Elasticsearch"
+  "graphql": "GraphQL"
+  "grpc": "gRPC"
+  "g-rpc": "gRPC"
+
+  "terraform": "Terraform"
+  "ansible": "Ansible"
+  "helm": "Helm"
+  "istio": "Istio"
+  "service mesh": "Service Mesh"
+
+  "linux": "Linux"
+  "unix": "Linux"
+  "bash": "Bash"
+  "shell scripting": "Bash"
+
+  "sql": "SQL"
+  "nosql": "NoSQL"
+  "hibernate": "Hibernate"
+  "jpa": "JPA"
+  "spring data jpa": "JPA"
+
+  "design patterns": "Design Patterns"
+  "solid": "SOLID Principles"
+  "system design": "System Design"
+  "dsa": "DSA"
+  "data structures": "DSA"
+  "algorithms": "DSA"
+
+  "python": "Python"
+  "go": "Go"
+  "golang": "Go"
+  "scala": "Scala"
+  "c#": "C#"
+  "csharp": "C#"
+  ".net": ".NET"
+  "dotnet": ".NET"

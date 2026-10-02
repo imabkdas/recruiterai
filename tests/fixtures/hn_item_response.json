@@ -1,0 +1,18 @@
+{
+  "id": 41000000,
+  "title": "Ask HN: Who is hiring? (October 2026)",
+  "children": [
+    {
+      "id": 41000101,
+      "created_at": "2026-10-01T15:30:00.000Z",
+      "author": "techlead",
+      "text": "Acme Corp | Senior Java Engineer | Remote (India / APAC) | Full-time<br>We build payment platforms using Java 21, Spring Boot, and Kafka."
+    },
+    {
+      "id": 41000102,
+      "created_at": "2026-10-01T15:45:00.000Z",
+      "author": "deleted",
+      "text": null
+    }
+  ]
+}

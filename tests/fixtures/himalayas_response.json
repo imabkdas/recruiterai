@@ -1,0 +1,28 @@
+{
+  "updatedAt": "2026-10-02T00:00:00Z",
+  "limit": 20,
+  "jobs": [
+    {
+      "title": "Senior Java Engineer",
+      "companyName": "Northwind",
+      "companySlug": "northwind",
+      "applicationLink": "https://himalayas.app/companies/northwind/jobs/senior-java-engineer",
+      "guid": "https://himalayas.app/companies/northwind/jobs/senior-java-engineer",
+      "locationRestrictions": ["India"],
+      "pubDate": 1759000000,
+      "excerpt": "Java services for a remote product team.",
+      "description": "<p>Build Java and Spring Boot services for a remote product team.</p>"
+    },
+    {
+      "title": "Backend Engineer",
+      "companyName": "Contoso",
+      "companySlug": "contoso",
+      "applicationLink": "https://himalayas.app/companies/contoso/jobs/backend-engineer",
+      "guid": "https://himalayas.app/companies/contoso/jobs/backend-engineer",
+      "locationRestrictions": [],
+      "pubDate": null,
+      "excerpt": "",
+      "description": ""
+    }
+  ]
+}

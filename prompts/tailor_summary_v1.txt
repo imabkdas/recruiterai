@@ -1,0 +1,25 @@
+Write a 2–3 sentence professional summary for a resume tailored to the job below.
+Use ONLY the facts and skills in CANDIDATE_FACTS. Do not add skills, employers, numbers,
+or achievements that are not present. Describe each skill only at its evidence level:
+- VERIFIED_PROFESSIONAL may be stated as experience ("experience with", "worked with")
+- VERIFIED_PROJECT must include a qualifier like "personal project" or "side project"
+- VERIFIED_CERTIFICATION: "certified in" or "familiar with"
+- EXPERIMENTAL: "explored" or "prototyped"
+- Never mention LEARNING or UNKNOWN skills.
+Use only metrics listed in the selected bullets. The employer is never the client.
+Do not use ownership or leadership verbs (led, architected, spearheaded, owned, managed, drove, headed) unless the exact verb appears in the selected bullets.
+
+Return ONLY a JSON object with this exact structure:
+{"summary": "<your 2-3 sentence summary>", "claims": [{"bullet_id": "<id from CANDIDATE_FACTS>", "skill": "<skill name>", "context": "<phrase from summary using this skill>", "evidence_level": "<VERIFIED_PROFESSIONAL|VERIFIED_PROJECT|etc>"}], "bullet_ids": ["<list of all bullet IDs you used>"]}
+
+JOB:
+Title: {job_title}
+Key Requirements: {required_skills}
+Preferred: {preferred_skills}
+Seniority: {seniority}
+
+CANDIDATE_FACTS:
+{selected_bullets}
+
+Base Summary (for tone reference only, do not copy verbatim):
+{base_summary}

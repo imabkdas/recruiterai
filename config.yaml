@@ -1,0 +1,92 @@
+llm:
+  provider: gemini
+  model_extract: "gemini-3.8-flash"
+  model_write: "gemini-3.8-flash"
+  # Free tier for this model allows 20 requests/day and 5/minute.
+  daily_call_cap: 20
+  max_retries: 3
+  max_description_chars: 6000
+  max_backoff_seconds: 60
+  min_request_interval_seconds: 13
+
+thresholds:
+  tier_a: 80
+  tier_b: 65
+  max_job_age_days: 21
+
+scoring:
+  evidence_weights:
+    VERIFIED_PROFESSIONAL: 1.0
+    VERIFIED_PROJECT: 0.6
+    VERIFIED_CERTIFICATION: 0.5
+    EXPERIMENTAL: 0.35
+    LEARNING: 0.2
+    UNKNOWN: 0.0
+
+claims:
+  project_qualifiers:
+    - "personal project"
+    - "side project"
+    - "hackathon"
+    - "certified"
+    - "certification"
+    - "explored"
+    - "prototype"
+    - "currently learning"
+
+queue:
+  daily_size: 20
+  weekly_target: 25
+
+prepare:
+  # Resumes are edited as LaTeX in the UI and compiled locally. Prepare does
+  # not call the LLM.
+  llm_tailor_top_n: 0
+  write_pdf: false
+
+sources:
+  greenhouse_boards: []
+  lever_companies: []
+  remoteok: true
+  remotive: true
+  himalayas: true
+  hn_hiring: true
+  gmail:
+    enabled: true
+    label: "job-alerts"
+    senders:
+      - jobs-listings@linkedin.com
+      - jobs-noreply@linkedin.com
+      - jobalerts-noreply@linkedin.com
+      - alerts@naukri.com
+      - naukrinews@naukri.com
+      # Instahyre alerts are parsed when this list or the job-alerts label
+      # includes them. Add the From address from a real Instahyre alert here.
+
+adzuna:
+  enabled: true
+  country: "in"
+  queries:
+    - "Software Engineer"
+    - "Java Backend Engineer"
+    - "Spring Boot Developer"
+  pages: 2
+  max_days_old: 21
+  monthly_call_budget: 900
+
+boards:
+  max_per_run: 20
+  greenhouse_boards: []
+  lever_companies: []
+  ashby_boards: []
+
+stack_bonus:
+  - Kafka
+  - Kubernetes
+  - Microservices
+  - Spring Boot
+
+notifications:
+  desktop: false
+  telegram: false
+  follow_up_days: 7

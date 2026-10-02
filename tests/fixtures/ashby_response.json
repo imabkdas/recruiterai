@@ -1,0 +1,22 @@
+{
+  "jobs": [
+    {
+      "id": "ashby-8801",
+      "title": "Java Backend Engineer",
+      "location": "India (Remote)",
+      "isListed": true,
+      "jobUrl": "https://jobs.ashbyhq.com/ramp/ashby-8801",
+      "applyUrl": "https://jobs.ashbyhq.com/ramp/ashby-8801/application",
+      "publishedAt": "2026-09-28T09:00:00Z",
+      "descriptionPlain": "Build scalable financial infrastructure using Java and Spring Boot."
+    },
+    {
+      "id": "ashby-unlisted",
+      "title": "Draft Internal Engineer",
+      "location": "Remote",
+      "isListed": false,
+      "jobUrl": "https://jobs.ashbyhq.com/ramp/ashby-unlisted",
+      "descriptionPlain": "Internal draft posting."
+    }
+  ]
+}

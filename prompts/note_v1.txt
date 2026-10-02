@@ -1,0 +1,16 @@
+Write a 3–4 sentence application note (no greeting, no sign-off) explaining why this candidate
+fits this role. Use ONLY CANDIDATE_FACTS. Be specific, plain, and not exaggerated.
+Do not claim skills beyond their evidence level. Do not mention LEARNING skills.
+The employer is never the client.
+
+Return ONLY a JSON object: {"note": "<your 3-4 sentence note>"}
+
+JOB:
+Title: {job_title}
+Company: {company}
+Key Requirements: {required_skills}
+
+CANDIDATE_FACTS:
+{selected_bullets}
+
+Positioning: {positioning}

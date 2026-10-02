@@ -1,0 +1,18 @@
+[
+  {
+    "legal": "Remote OK API terms of use...",
+    "disclaimer": "Do not scrape aggressively..."
+  },
+  {
+    "id": "rok-101",
+    "epoch": 1759000000,
+    "date": "2026-09-28T08:00:00Z",
+    "company": "Automattic",
+    "position": "Senior Backend Engineer (Java)",
+    "tags": ["java", "spring", "backend", "remote"],
+    "description": "<p>We are hiring a Senior Java Backend Engineer to scale our services...</p>",
+    "location": "Worldwide",
+    "url": "https://remoteok.com/remote-jobs/rok-101",
+    "apply_url": "https://remoteok.com/remote-jobs/rok-101/apply"
+  }
+]

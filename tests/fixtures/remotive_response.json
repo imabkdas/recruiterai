@@ -1,0 +1,17 @@
+{
+  "0-legal-notice": "Remotive API is free to use...",
+  "job-count": 1,
+  "jobs": [
+    {
+      "id": 9901,
+      "url": "https://remotive.com/remote-jobs/software-dev/senior-java-developer-9901",
+      "title": "Senior Java Developer - Spring Boot",
+      "company_name": "Toptal",
+      "category": "software-dev",
+      "candidate_required_location": "Worldwide",
+      "salary": "$120k - $150k",
+      "description": "<p>Toptal is looking for Senior Java Developers...</p>",
+      "publication_date": "2026-09-28T09:30:00"
+    }
+  ]
+}

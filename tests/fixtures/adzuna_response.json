@@ -1,0 +1,34 @@
+{
+  "results": [
+    {
+      "id": "adzuna-1001",
+      "title": "Senior Java Backend Engineer",
+      "company": {
+        "display_name": "Fintech Solutions India Pvt Ltd"
+      },
+      "location": {
+        "display_name": "Bengaluru, Karnataka",
+        "area": ["India", "Karnataka", "Bengaluru"]
+      },
+      "description": "Looking for a Senior Java Backend Engineer with Spring Boot and Microservices experience...",
+      "redirect_url": "https://www.adzuna.in/land/ad/adzuna-1001?se=abc",
+      "created": "2026-09-28T10:00:00Z",
+      "salary_min": 1800000.0,
+      "salary_max": 2800000.0
+    },
+    {
+      "id": "adzuna-1002",
+      "title": "React Frontend Developer",
+      "company": {
+        "display_name": "WebUI Corp"
+      },
+      "location": {
+        "display_name": "Pune, Maharashtra",
+        "area": ["India", "Maharashtra", "Pune"]
+      },
+      "description": "Pure frontend role focusing on React and CSS animations.",
+      "redirect_url": "https://www.adzuna.in/land/ad/adzuna-1002?se=xyz",
+      "created": "2026-09-28T11:00:00Z"
+    }
+  ]
+}

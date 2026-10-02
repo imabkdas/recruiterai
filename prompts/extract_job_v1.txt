@@ -1,0 +1,11 @@
+You extract structured data from a job description. Return only JSON matching the schema.
+Rules:
+- Use only information stated in the text. If unknown, use null/"unknown".
+- List skills as they appear; do not infer skills that are not mentioned.
+- remote_eligibility.open_to_india: "yes" only if the text clearly allows working from India
+  or states worldwide/APAC/Asia; "no" if it requires residence or work authorization elsewhere;
+  otherwise "unclear". Quote the restricting phrase in restriction_text.
+- responsibilities_summary: at most 3 sentences.
+
+JOB DESCRIPTION:
+{description}
